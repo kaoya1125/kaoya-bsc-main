@@ -76,10 +76,14 @@ export default function DepositModal({
           style={{ background: 'linear-gradient(87.67deg, #F6881E 0%, #EF2E24 100%)', borderRadius: '6px' }}
           onClick={async () => {
             setPendingTx(true)
-            await onConfirm(val)
-            setPendingTx(false)
-            if (onDismiss != undefined)
-              onDismiss()
+            try {
+              await onConfirm(val)
+              setPendingTx(false)
+              if (onDismiss != undefined)
+                onDismiss()
+            } catch(e) {
+              setPendingTx(false)
+            }
           }}
         >
           {pendingTx ? 'Pending Confirmation' : 'Confirm'}

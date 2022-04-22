@@ -39,8 +39,12 @@ const Harvest = ({busdStakingContract, stake}) => {
               disabled={!earnings.toNumber() || pendingTx}
               onClick={async () => {
                 setPendingTx(true)
-                await onReward()
-                setPendingTx(false)
+                try {
+                  await onReward()
+                  setPendingTx(false)
+                } catch(e) {
+                  setPendingTx(false)
+                }
               }}
             >
               <span>{pendingTx ? 'Collecting KAOYA' : 'Harvest'}</span>

@@ -73,9 +73,13 @@ export default function WithdrawModal({
           block
           onClick={async () => {
             setPendingTx(true)
-            await onConfirm(val)
-            setPendingTx(false)
-            onDismiss?.()
+            try {
+              await onConfirm(val)
+              setPendingTx(false)
+              onDismiss?.()
+            } catch(e) {
+              setPendingTx(false)
+            }
           }}
           style={{ background: 'linear-gradient(87.67deg, #F6881E 0%, #EF2E24 100%)', borderRadius: '6px' }}
         >
